@@ -15,7 +15,7 @@ async function loginUser(){
 
 
 async function AllBooks(customer_id){
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,added_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1`,[customer_id]);
+    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1`,[customer_id]);
     console.log("All books :",rows);
     return rows;
 

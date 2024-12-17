@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS books(
          book_source VARCHAR(10),
          author VARCHAR(100),
          read_status VARCHAR(10) NOT NULL,
-         customer_id VARCHAR(10) NOT NULL,
-         genre_id VARCHAR(10) NOT NULL,
+         customer_id INTEGER NOT NULL,
+         genre_id INTEGER NOT NULL,
          add_date DATE,
          CHECK (read_status IN ('UNREAD','READ','READING'))
 
