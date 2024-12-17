@@ -9,6 +9,8 @@ function addDate(){
 
 async function loginUser(){
 
+
+
 }
 
 
@@ -19,7 +21,7 @@ async function AllBooks(customer_id){
 
 }
 async function getABook(customer_id,book_id){
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1`,[customer_id]);
+    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND id=book_id`,[customer_id,book_id]);
     console.log("Got Book :",rows);
     return rows;
 
@@ -37,7 +39,7 @@ async function StatusBooks(customer_id,read_stat){
 
 async function BooksByGenre(customer_id,genre_name) {
     //!Check query
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id= WHERE customer_id=$1 AND =$2`,[customer_id,genre_name]);
+    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND genre_name=$2`,[customer_id,genre_name]);
     console.log(`All These Books Have Status :`,rows);
     return rows;
     
@@ -47,7 +49,7 @@ async function BooksByGenre(customer_id,genre_name) {
 
 async function searchBooks(customer_id,input){
     // Search by name or author
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND book_name LIKE '%$2%' OR author LIKE '%$2%' `,[customer_id,input]);
+    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND book_name ILIKE '%${input}%' OR author ILIKE   '%${input}%'`,[customer_id]);
     console.log(`Found Books :`,rows);
     return rows;
 
@@ -67,20 +69,20 @@ async function createBook(customer_id,
          book_source,
          author,
          read_status,
-         customer_id,
          genre_name 
     })
 {
     const add_date=addDate();
     const check=await pool.query("SELECT COUNT(*) FROM GENRE WHERE genre_name=$1;",[genre_name]);
-    if(check==0){
+    if(parseInt(check.rows[0].count)==0){
         createGenre(genre_name);
 
 
     }
 
-        const genre_id=await pool.query("SELECT id FROM genre WHERE LOWER(genre_name)=LOWER($1)",[genre_name]);
-
+        const genre_id_table=await pool.query("SELECT id FROM genre WHERE LOWER(genre_name)=LOWER($1)",[genre_name]);
+        console.log(genre_id_table);
+        const genre_id=genre_id_table.rows[0].id;
 
        await pool.query('INSERT INTO books ( book_name,book_source,author, read_status,customer_id,genre_id,add_date) VALUES ($1,$2,$3,$4,$5,$6,$7);',
         [  
@@ -106,11 +108,11 @@ async function updateBook(customer_id,
          book_source,
          author,
          read_status,
-         customer_id,
+        
          
     })
 {
-    await pool.query('UPDATE books SET (book_name,book_source, author, read_status,customer_id) ($2,$3,$4,$5,$6); WHERE id="$1',
+    await pool.query('UPDATE books SET book_name=$2,book_source=$3, author=$4, read_status=$5,customer_id=$6 WHERE id=$1',
         [   
             id ,
             book_name,
@@ -125,8 +127,7 @@ async function updateBook(customer_id,
 
 }
 async function deleteBook(customer_id,book_id){
-    await pool.query("DELETE FROM books WHERE id = $1",[book_id]);
-    const genre_id=await pool.query("SELECT genre_id FROM books WHERE id=[$1]",[book_id]);
+    const genre_id=await pool.query("SELECT genre_id FROM books WHERE id=$1 AND cutomer_id=$2",[book_id,customer_id]);
     await pool.query("UPDATE genre SET book_number=book_number-1 WHERE id=$1",[genre_id]);//UPDATE book_number
 
     console.log("BOOK DELETED!");
@@ -136,7 +137,7 @@ async function deleteBook(customer_id,book_id){
 }
 
 
-module.exports=[
+module.exports={
     AllBooks,
     getABook,
     StatusBooks,
@@ -147,4 +148,4 @@ module.exports=[
     deleteBook,
     createGenre
 
-]
+}

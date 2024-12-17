@@ -1,6 +1,8 @@
 const db=require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
+const customer_id=1;
+
 const isObjectEmpty=(obj)=>
 {
     for(let prop in obj){
@@ -12,7 +14,7 @@ const isObjectEmpty=(obj)=>
 }
 
 const getAllBooks=asyncHandler(async (req,res)=>{
-    const books=await db.AllBooks();
+    const books=await db.AllBooks(customer_id);
     return books;
     
     
@@ -41,7 +43,7 @@ const getStatusBooks=asyncHandler(async (req,res)=>{
 
 const getBooksByGenre=asyncHandler(async (req,res)=>{
     const genre_name=req.query.genre;
-    const books=await db.StatusBooks(customer_id,genre_name);
+    const books=await db.BooksByBooks(customer_id,genre_name);
     if(!genre){
         res.status(404).render("error",{message:"Genre not found"});
 
@@ -62,7 +64,7 @@ const getBooksByGenre=asyncHandler(async (req,res)=>{
 
 const getSearchBook=asyncHandler(async (req,res)=>{
     const input=req.query.input;
-    const books=await db.StatusBooks(customer_id,input);
+    const books=await db.searchBooks(customer_id,input);
     if(!input){
         res.status(404).render("error",{message:"No input error"});
 
@@ -152,7 +154,7 @@ const deletes=asyncHandler(async (req,res)=>{
 
 });
 
-module.exports=[
+module.exports={
     getAllBooks,
     getStatusBooks,
     getBooksByGenre,
@@ -161,7 +163,6 @@ module.exports=[
     postCreate,
     getUpdate,
     postUpdate,
-    update,
     deletes
 
-]
+};

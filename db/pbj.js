@@ -37,6 +37,7 @@ async function main(){
         database: "booklit",
         password: "postgres",
         port: 5432 
+
     });
   await client.connect();
   await client.query(SQL);

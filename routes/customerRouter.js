@@ -1,7 +1,15 @@
-const [ getAllBooks,getStatusBooks,getBooksByGenre,getSearchBook,getCreate, postCreate,getUpdate,postUpdate,deletes,]=require("../controllers/customerController");
+const {getAllBooks,getStatusBooks,getBooksByGenre,getSearchBook,getCreate, postCreate,getUpdate,postUpdate,deletes}=require("../controllers/customerController");
 
 const {Router}=require("express");
 const customerRouter=Router();
+
+
+customerRouter.get("/",(req,res)=>{
+    res.send("Hii");
+
+  
+
+});
 
 customerRouter.get("/:customer_id",async(req,res)=>{
 
@@ -24,3 +32,5 @@ customerRouter.get("/:customer_id/create",(req,res)=>{ getCreate()});
 customerRouter.post("/:customer_id/create",(req,res)=>{postCreate()});
 customerRouter.get("/:customer_id/update",(req,res)=>{getUpdate() });
 customerRouter.post("/:customer_id/update",(req,res)=>{postUpdate()});
+
+module.exports=customerRouter;
