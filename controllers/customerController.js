@@ -40,8 +40,8 @@ const getStatusBooks=asyncHandler(async (req,res)=>{
 });
 
 const getBooksByGenre=asyncHandler(async (req,res)=>{
-    const genre=req.query.genre;
-    const books=await db.StatusBooks(customer_id,genre);
+    const genre_name=req.query.genre;
+    const books=await db.StatusBooks(customer_id,genre_name);
     if(!genre){
         res.status(404).render("error",{message:"Genre not found"});
 
@@ -116,14 +116,13 @@ const getUpdate=asyncHandler(async (req,res)=>{
 
     }
     else {
-        await db.createBook(req.body);
-        res.redirect("/:customer_id");
+        res.render("update",{book:await db.getABook(book_id)}); //*values for input
     
 
     }
      
 
-    res.render("update");
+ 
  
 });
 

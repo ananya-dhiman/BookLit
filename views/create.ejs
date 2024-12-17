@@ -1,0 +1,42 @@
+<html>
+    <head>
+        Books
+    </head>
+    <body>
+            <div> Create A Book</div>
+         
+
+            <form action="/create" method="POST">
+                <li className="Book">
+                    <label>Book Name</label>
+                    <input name="name" type="text" placeholder="Black Beauty">
+
+                    <label>Book Souce</label>
+                    <input name="link" placeholder="Enter Link">
+
+                    <label>Author/label>
+                    <input name="author" type="text" placeholder="Anna Sewell">
+
+                    <label>Read Status</label>
+                    <select name="read_status" >
+                        <option value="unread">UNREAD</option>
+                        <option value="read">READ</option>
+                        <option value="reading">READING</option>
+                        
+                    </select>
+
+                    <label>Genre</label>
+                    <input name="genre" placeholder="Anna Sewell">
+                    
+                    <button type="submit">Submit</button>
+
+
+                </li>
+
+            </form>
+            
+            <a href="/:customer_id">Back </a>
+
+    </body>
+
+</html>
