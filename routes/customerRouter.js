@@ -14,23 +14,29 @@ customerRouter.get("/",(req,res)=>{
 customerRouter.get("/:customer_id",async(req,res)=>{
 
     if(req.query.status){
-       await getStatusBooks();
+       return await getStatusBooks(req,res);
     }
     if(req.query.genre){
-        await getBooksByGenre();
+        return await getBooksByGenre(req,res);
 
     }
     if(req.query.search){
-        await getSearchBook();
+        return await getSearchBook(req,res);
 
     }
-    await getAllBooks() 
+    if(req.query.delete){
+        return await deletes(req,res);
+    }
+    return await getAllBooks(req,res);
 
 });
 
-customerRouter.get("/:customer_id/create",(req,res)=>{ getCreate()});
-customerRouter.post("/:customer_id/create",(req,res)=>{postCreate()});
-customerRouter.get("/:customer_id/update",(req,res)=>{getUpdate() });
-customerRouter.post("/:customer_id/update",(req,res)=>{postUpdate()});
+customerRouter.get("/:customer_id/",(req,res)=>{ getCreate(req,res)});
+
+
+customerRouter.get("/:customer_id/create",(req,res)=>{ getCreate(req,res)});
+customerRouter.post("/:customer_id/create",(req,res)=>{postCreate(req,res)});
+customerRouter.get("/:customer_id/update/",(req,res)=>{getUpdate(req,res) });
+customerRouter.post("/:customer_id/update/",(req,res)=>{postUpdate(req,res)});
 
 module.exports=customerRouter;

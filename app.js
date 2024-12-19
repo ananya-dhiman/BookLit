@@ -13,6 +13,11 @@ app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.locals.message = null; // Default to null
+    res.locals.customer_id=1; //User 1
+    next();
+});
 const customerRouter=require("./routes/customerRouter");
 app.use(customerRouter);
 

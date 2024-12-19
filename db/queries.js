@@ -15,13 +15,28 @@ async function loginUser(){
 
 
 async function AllBooks(customer_id){
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1`,[customer_id]);
+    const {rows}=await pool.query(`SELECT 
+        books.id AS book_id,
+        book_name,
+        book_source,
+        author,
+        read_status,
+        genre_name,
+        add_date
+        FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1`,[customer_id]);
     console.log("All books :",rows);
     return rows;
 
 }
 async function getABook(customer_id,book_id){
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND id=book_id`,[customer_id,book_id]);
+    const {rows}=await pool.query(`SELECT 
+        books.id AS book_id,
+        book_name,
+        book_source,
+        author,
+        read_status,
+        genre_name,
+        add_date FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND id=book_id`,[customer_id,book_id]);
     console.log("Got Book :",rows);
     return rows;
 
@@ -29,7 +44,14 @@ async function getABook(customer_id,book_id){
 
 
 async function StatusBooks(customer_id,read_stat){
-    const {rows}=await pool.query(`SELECT * FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND read_status=$2`,[customer_id,read_stat]);
+    const {rows}=await pool.query(`SELECT 
+        books.id AS book_id,
+        book_name,
+        book_source,
+        author,
+        read_status,
+        genre_name,
+        add_date FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND read_status=$2`,[customer_id,read_stat]);
     console.log(`All These Books Have ${read_stat} Status :`,rows);
     return rows;
     
@@ -39,7 +61,14 @@ async function StatusBooks(customer_id,read_stat){
 
 async function BooksByGenre(customer_id,genre_name) {
     //!Check query
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND genre_name=$2`,[customer_id,genre_name]);
+    const {rows}=await pool.query(`SELECT 
+        books.id AS book_id,
+        book_name,
+        book_source,
+        author,
+        read_status,
+        genre_name,
+        add_date FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND genre_name=$2`,[customer_id,genre_name]);
     console.log(`All These Books Have Status :`,rows);
     return rows;
     
@@ -49,7 +78,14 @@ async function BooksByGenre(customer_id,genre_name) {
 
 async function searchBooks(customer_id,input){
     // Search by name or author
-    const {rows}=await pool.query(`SELECT (book_name,book_source,author,read_status,genre_name,add_date) FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND book_name ILIKE '%${input}%' OR author ILIKE   '%${input}%'`,[customer_id]);
+    const {rows}=await pool.query(`SELECT
+        books.id AS book_id,
+        book_name,
+        book_source,
+        author,
+        read_status,
+        genre_name,
+        add_date FROM books JOIN genre ON books.genre_id=genre.id WHERE customer_id=$1 AND book_name ILIKE '%${input}%' OR author ILIKE   '%${input}%'`,[customer_id]);
     console.log(`Found Books :`,rows);
     return rows;
 
@@ -89,7 +125,7 @@ async function createBook(customer_id,
             book_name,
             book_source,
             author,
-            read_status,
+            read_status.toUpperCase(),
             customer_id,
             genre_id,
             add_date
@@ -135,6 +171,16 @@ async function deleteBook(customer_id,book_id){
 
    
 }
+//* When another user adds a genre it shouldnt be visible for some other user in the sidedrawer thing-Done
+
+async function getGenres(customer_id){
+    const genre_for_user=await pool.query("SELECT DISTINCT genre_name FROM books JOIN on genre books.genre_id=genre.id  WHERE cutomer_id=$1",[customer_id]);
+    return genre_for_user;
+
+
+
+   
+}
 
 
 module.exports={
@@ -146,6 +192,7 @@ module.exports={
     createBook,
     updateBook,
     deleteBook,
-    createGenre
+    createGenre,
+    getGenres
 
 }

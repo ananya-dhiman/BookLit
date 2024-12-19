@@ -4,22 +4,60 @@
     </head>
     <body>
             <div>Welcome User</div>
-            <div><%= message %></div>
+            <!-- SideDrawer -->
+             <div className="SideDrawer">
+                <div>
+                    U1
+                </div>
+                <ul><a>Read Status</a>
+                    <a href="/:<%=customer_id%>/?status='READ'">READ</a>
+                    <a href="/:<%=customer_id%>/?status='UNREAD'">UNREAD</a>
+                    <a href="/:<%=customer_id%>/?status='READING'">READING</a>
+                </ul>
+                <ul><a>Genre</a>
+                    <a>Do it</a>
+                   
+                </ul>
+                <a>Logout</a>
+             </div>
+   
 
-            <ul className="List">
+            <!-- Search -->
+            <form action="/:<%=customer_id%>/" method="GET">
+                <label>Search </label>
+                <input name="input" type="text" placeholder="Enter book or author">
+                <button type="submit">Submit</button>
+            </form>
+ 
+            <%if(message){%>
+                <%- include("empty")   %>
+            <%} else{ %> 
+                <div>
+                    All Books
+                </div>
+                 <ul className="List">
+                <%(books).forEach(book=>{%>
                 <li className="Book">
-                    <div>books.name</div>
-                    <div>books.source</div>
-                    <div>books.author</div>
-                    <div>books.read_status</div>
-                    <div>books.genre_name</div>
-                    <div>books.added_date</div>
-
+                    <div><%= book.book_name %></div>
+                    <div><%= book.book_source%></div>
+                    <div><%= book.author %></div>
+                    <div><%= book.genre_name %></div>
+                    <div><%= book.add_date%></div>
+                    <div><%= book.read_status%></div>
+                    <a href='/:<%=customer_id%>/delete=<%= book.book_id %>'>Delete</a>
+                    <a href="/:<%=customer_id%>/update=book.id">Edit</a>
                 </li>
-
+                <%})%>
             </ul>
+
+
+            <% } %>
+
+            <a href="/:customer_id/create">Create</a>
+
+          
             
-            <a href="/:customer_id">Back </a>
+            
 
     </body>
 
