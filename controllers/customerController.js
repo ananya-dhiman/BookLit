@@ -114,6 +114,7 @@ const getBooksByGenre=asyncHandler(async (req,res)=>{
 
 const getSearchBook=asyncHandler(async (req,res)=>{
     const input=req.query.input;
+    console.log(input);
     const books=await db.searchBooks(customer_id,input);
     const genres=await getGen();
     if(!input){

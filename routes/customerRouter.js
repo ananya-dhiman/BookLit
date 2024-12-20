@@ -21,7 +21,7 @@ customerRouter.get('/:customer_id',async(req,res)=>{
         return await getBooksByGenre(req,res);
 
     }
-    if(req.query.search){
+    if(req.query.input){
         return await getSearchBook(req,res);
 
     }
