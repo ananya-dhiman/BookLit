@@ -63,6 +63,7 @@ async function StatusBooks(customer_id,read_stat){
 
 async function BooksByGenre(customer_id,genre_name) {
     //!Check query
+    
     const {rows}=await pool.query(`SELECT 
         books.id AS book_id,
         book_name,
@@ -71,7 +72,7 @@ async function BooksByGenre(customer_id,genre_name) {
         read_status,
         genre_name,
         add_date FROM books JOIN genre ON books.genre_id=genre.genre_id WHERE customer_id=$1 AND genre_name=$2`,[customer_id,genre_name]);
-    console.log(`All These Books Have Status :`,rows);
+    console.log(`All These Books Have ${genre_name} :`,rows);
     return rows;
     
  

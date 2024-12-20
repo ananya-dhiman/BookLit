@@ -23,7 +23,7 @@
                     <% genres.forEach(genre=>{%>
                     <li class="Genre">
 
-                        <a href=""><%= genre.genre_name %><span>(<%=genre.book_number%>)</span></a>
+                        <a href="/<%=customer_id%>/?genre=<%=genre.genre_name%>"><%= genre.genre_name %><span>(<%=genre.book_number%>)</span></a>
                  
                         
                     </li>

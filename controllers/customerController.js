@@ -83,7 +83,8 @@ const getStatusBooks=asyncHandler(async (req,res)=>{
 
 const getBooksByGenre=asyncHandler(async (req,res)=>{
     const genre_name=req.query.genre;
-    const books=await db.BooksByBooks(customer_id,genre_name);
+    console.log(genre_name);
+    const books=await db.BooksByGenre(customer_id,genre_name);
     const genres=await getGen();
     if(!genre_name){
         res.status(404).render("error",{message:"Genre not found"});
