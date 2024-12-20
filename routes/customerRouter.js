@@ -38,7 +38,10 @@ customerRouter.get("/:customer_id/",(req,res)=>{ getCreate(req,res)});
 
 customerRouter.get("/:customer_id/create",(req,res)=>{ getCreate(req,res)});
 customerRouter.post("/:customer_id/create",(req,res)=>{postCreate(req,res)});
-customerRouter.get("/:customer_id/update/",(req,res)=>{getUpdate(req,res) });
-customerRouter.post("/:customer_id/update/",(req,res)=>{postUpdate(req,res)});
+customerRouter.get("/:customer_id/update/:book_id",(req,res)=>{getUpdate(req,res) });
+customerRouter.post("/:customer_id/update/:book_id",(req,res)=>{
+    console.log(req.body);
+    postUpdate(req,res)
+});
 
 module.exports=customerRouter;

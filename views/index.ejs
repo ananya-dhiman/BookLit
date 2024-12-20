@@ -60,7 +60,7 @@
                     <div><%= book.add_date%></div>
                     <div><%= book.read_status%></div>
                     <a href='/<%=customer_id%>/?delete=<%= book.book_id %>'>Delete</a>
-                    <a href="/<%=customer_id%>/?update/<%= book.book_id %>">Edit</a>
+                    <a href="/<%=customer_id%>/update/<%= book.book_id %>">Edit</a>
                 </li>
                 <%})%>
             </ul>

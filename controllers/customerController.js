@@ -56,7 +56,7 @@ const getStatusBooks=asyncHandler(async (req,res)=>{
     const books=await db.StatusBooks(customer_id,read_stat);
     const genres=await getGen();
     if(!read_stat){
-        res.status(404).render("error",{message1:"Status not found"});
+        res.status(404).render("error",{message:"Status not found"});
 
 
     }
@@ -86,7 +86,7 @@ const getBooksByGenre=asyncHandler(async (req,res)=>{
     const books=await db.BooksByBooks(customer_id,genre_name);
     const genres=await getGen();
     if(!genre_name){
-        res.status(404).render("error",{message1:"Genre not found"});
+        res.status(404).render("error",{message:"Genre not found"});
 
 
     }
@@ -116,7 +116,7 @@ const getSearchBook=asyncHandler(async (req,res)=>{
     const books=await db.searchBooks(customer_id,input);
     const genres=await getGen();
     if(!input){
-        res.status(404).render("error",{message1:"No input error"});
+        res.status(404).render("error",{message:"No input error"});
 
 
     }
@@ -150,7 +150,7 @@ const postCreate=asyncHandler(async (req,res)=>{
     console.log(req.body);
  
     if(!req.body){
-        res.status(404).render("error",{message1:"Something went wrong with the input"});
+        res.status(404).render("error",{message:"Something went wrong with the input"});
 
 
     }
@@ -171,7 +171,7 @@ const postCreate=asyncHandler(async (req,res)=>{
 const getUpdate=asyncHandler(async (req,res)=>{
     const book_id=req.params.book_id;
     if(!book_id){
-        res.status(404).render("error",{message1:"Something went wrong"});
+        res.status(404).render("error",{message:"Something went wrong"});
         
 
 
@@ -189,15 +189,17 @@ const getUpdate=asyncHandler(async (req,res)=>{
 
 
 const postUpdate=asyncHandler(async (req,res)=>{
+    const book_id=req.params.book_id
     console.log(req.body);
-    await db.updateBook(req.body);
+  
     if(!req.body){
-        res.status(404).render("error",{message1:"Something went wrong with the input"});
+        res.status(404).render("error",{message:"Something went wrong with the input"});
 
 
     }
     else {
-        await db.updateBook(customer_id,req.body);
+        await db.updateBook(book_id,customer_id,req.body);
+        console.log("UPDATED!!");
         res.redirect("/:customer_id");
     
 

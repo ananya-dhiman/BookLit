@@ -36,7 +36,7 @@ async function getABook(customer_id,book_id){
         author,
         read_status,
         genre_name,
-        add_date FROM books JOIN genre ON books.genre_id=genre.genre_id WHERE customer_id=$1 AND id=book_id`,[customer_id,book_id]);
+        add_date FROM books JOIN genre ON books.genre_id=genre.genre_id WHERE customer_id=$1 AND id=$2`,[customer_id,book_id]);
     console.log("Got Book :",rows);
     return rows;
 
@@ -142,19 +142,21 @@ async function createBook(customer_id,
 
 }
 
-async function updateBook(customer_id,
-    {    id ,
+async function updateBook(book_id,customer_id,
+    {    
          book_name,
          book_source,
          author,
          read_status,
+         
         
          
     })
 {
-    await pool.query('UPDATE books SET book_name=$2,book_source=$3, author=$4, read_status=$5,customer_id=$6 WHERE id=$1',
+    console.log(book_name);
+    await pool.query('UPDATE books SET book_name=$2,book_source=$3, author=$4, read_status=UPPER($5), customer_id=$6 WHERE id=$1',
         [   
-            id ,
+            book_id,
             book_name,
             book_source,
             author,

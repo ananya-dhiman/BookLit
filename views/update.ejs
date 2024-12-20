@@ -5,28 +5,27 @@
     <body>
             <div> Update Book</div>
          
+        
 
-            <form action="/update" method="POST">
+            <form action="/<%=customer_id%>/update/<%= book[0].book_id %>" method="POST">
                 <li className="Book">
                     <label>Book Name</label>
-                    <input name="name" value=book.book_name type="text" placeholder="Black Beauty">
+                    <input name="name" value="<%=book[0].book_name%>" type="text" placeholder="Black Beauty">
 
                     <label>Book Souce</label>
-                    <input name="link"  value=book.book_source placeholder="Enter Link">
+                    <input name="link"  value="<%=book[0].book_source%>"placeholder="Enter Link">
 
-                    <label>Author/label>
-                    <input name="author" value=book.author type="text" placeholder="Anna Sewell">
+                    <label>Author</label>
+                    <input name="author" value="<%=book[0].author%>" type="text" >
 
                     <label>Read Status</label>
-                    <select name="read_status" value=book.read_status >
-                        <option value="unread">UNREAD</option>
-                        <option value="read">READ</option>
-                        <option value="reading">READING</option>
+                    <select name="read_status"  >
+                        <option value="unread" <%= book[0].read_status === 'UNREAD' ? 'selected' : '' %>>UNREAD</option>
+                        <option value="read" <%= book[0].read_status === 'READ' ? 'selected' : '' %>>READ</option>
+                        <option value="reading" <%= book[0].read_status === 'READING' ? 'selected' : '' %>>READING</option>
                         
                     </select>
 
-                    <label>Genre</label>
-                    <input name="genre" value=book.genre_name placeholder="Anna Sewell">
                     
                     <button type="submit">Save</button>
 
@@ -35,7 +34,7 @@
 
             </form>
             
-            <a href="/:customer_id">Back </a>
+            <a href="/<%=customer_id%>">Back </a>
 
     </body>
 
