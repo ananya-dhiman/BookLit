@@ -207,9 +207,15 @@ const postUpdate=asyncHandler(async (req,res)=>{
 
 
 const deletes=asyncHandler(async (req,res)=>{
-    const book_id=req.query.delete;
-    await db.deleteBook(customer_id,book_id);
-    res.redirect(`/${customer_id}`);
+    try{
+        const book_id=req.query.delete;
+        await db.deleteBook(customer_id,book_id);
+        getAllBooks(req,res);
+    }
+    catch(error){
+        res.render("error",{message:error})
+    }
+    
   
     
 

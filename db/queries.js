@@ -167,10 +167,15 @@ async function updateBook(customer_id,
 
 }
 async function deleteBook(customer_id,book_id){
-    const genre_id=await pool.query("SELECT genre_id FROM books WHERE id=$1 AND cutomer_id=$2",[book_id,customer_id]);
-    await pool.query("UPDATE genre SET book_number=book_number-1 WHERE id=$1",[genre_id]);//UPDATE book_number
-
+    
+    const {rows}=await pool.query("SELECT genre_id FROM books WHERE id=$1 AND customer_id=$2",[book_id,customer_id]);
+    console.log(rows);
+    const genre_id=rows[0].genre_id;
+    
+    await pool.query("UPDATE genre SET book_number=book_number-1 WHERE genre_id=$1",[genre_id]);//UPDATE book_number
+    await pool.query("DELETE FROM books WHERE books.id=$1;",[book_id]);
     console.log("BOOK DELETED!");
+
 
 
    

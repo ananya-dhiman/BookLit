@@ -19,9 +19,11 @@
                     <%if (message2) {%>
                         <%- include("empty")   %>
                     <%} else{ %> 
+                        <div>All Genres</div>
                     <% genres.forEach(genre=>{%>
                     <li class="Genre">
-                        <div><%= genre.genre_name %><span>(<%=genre.book_number%>)</span></div>
+
+                        <a href=""><%= genre.genre_name %><span>(<%=genre.book_number%>)</span></a>
                  
                         
                     </li>
@@ -57,8 +59,8 @@
                     <div><%= book.genre_name %></div>
                     <div><%= book.add_date%></div>
                     <div><%= book.read_status%></div>
-                    <a href='/<%=customer_id%>/delete=<%= book.book_id %>'>Delete</a>
-                    <a href="/<%=customer_id%>/update/<%= book.book_id %>">Edit</a>
+                    <a href='/<%=customer_id%>/?delete=<%= book.book_id %>'>Delete</a>
+                    <a href="/<%=customer_id%>/?update/<%= book.book_id %>">Edit</a>
                 </li>
                 <%})%>
             </ul>
