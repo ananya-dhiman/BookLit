@@ -1,9 +1,11 @@
 <html>
 
     <body>
-           
-            <div><%= message %></div>
-
+        <%if(message1){%>
+        <div><%= message1 %></div>
+        <%}else if(message2){%>
+        <div><%= message2 %></div>
+        <%}%>
 
     </body>
 

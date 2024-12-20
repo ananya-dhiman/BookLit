@@ -5,47 +5,60 @@
     <body>
             <div>Welcome User</div>
             <!-- SideDrawer -->
-             <div className="SideDrawer">
+             <div class="SideDrawer">
                 <div>
                     U1
                 </div>
                 <ul><a>Read Status</a>
-                    <a href="/:<%=customer_id%>/?status='READ'">READ</a>
-                    <a href="/:<%=customer_id%>/?status='UNREAD'">UNREAD</a>
-                    <a href="/:<%=customer_id%>/?status='READING'">READING</a>
+                    <a href="/<%=customer_id%>/?status=READ">READ</a>
+                    <a href="/<%=customer_id%>/?status=UNREAD">UNREAD</a>
+                    <a href="/<%=customer_id%>/?status=READING">READING</a>
                 </ul>
-                <ul><a>Genre</a>
-                    <a>Do it</a>
-                   
+                
+                <ul class="List">
+                    <%if (message2) {%>
+                        <%- include("empty")   %>
+                    <%} else{ %> 
+                    <% genres.forEach(genre=>{%>
+                    <li class="Genre">
+                        <div><%= genre.genre_name %><span>(<%=genre.book_number%>)</span></div>
+                 
+                        
+                    </li>
+                    <%})%>
+                    <% } %>
                 </ul>
-                <a>Logout</a>
-             </div>
-   
 
-            <!-- Search -->
-            <form action="/:<%=customer_id%>/" method="GET">
+
+                     <!-- Search -->
+            <form action="/<%=customer_id%>/" method="GET">
                 <label>Search </label>
                 <input name="input" type="text" placeholder="Enter book or author">
                 <button type="submit">Submit</button>
             </form>
+                <a>Logout</a>
+             </div>
+   
+
+       
  
-            <%if(message){%>
+            <%if (message1) { %>
                 <%- include("empty")   %>
             <%} else{ %> 
                 <div>
                     All Books
                 </div>
-                 <ul className="List">
-                <%(books).forEach(book=>{%>
-                <li className="Book">
+                 <ul class="List">
+                <% books.forEach(book=>{%>
+                <li class="Book">
                     <div><%= book.book_name %></div>
                     <div><%= book.book_source%></div>
                     <div><%= book.author %></div>
                     <div><%= book.genre_name %></div>
                     <div><%= book.add_date%></div>
                     <div><%= book.read_status%></div>
-                    <a href='/:<%=customer_id%>/delete=<%= book.book_id %>'>Delete</a>
-                    <a href="/:<%=customer_id%>/update=book.id">Edit</a>
+                    <a href='/<%=customer_id%>/delete=<%= book.book_id %>'>Delete</a>
+                    <a href="/<%=customer_id%>/update/<%= book.book_id %>">Edit</a>
                 </li>
                 <%})%>
             </ul>
@@ -53,7 +66,7 @@
 
             <% } %>
 
-            <a href="/:customer_id/create">Create</a>
+            <a href="/<%=customer_id%>/create">Create</a>
 
           
             

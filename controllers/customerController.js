@@ -2,6 +2,15 @@ const db=require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
 const customer_id=1;
+async function getGen(){
+    
+    const {rows}=await db.getGenres(customer_id);
+    console.log("Genre: ",rows);
+    return rows;
+
+
+
+};
 
 const isObjectEmpty=(obj)=>
 {
@@ -15,13 +24,21 @@ const isObjectEmpty=(obj)=>
 
 const getAllBooks=asyncHandler(async (req,res)=>{
     const books=await db.AllBooks(customer_id);
-    if(isObjectEmpty(books)){
-        res.render("index",{ message:"No books added" });
+    const genres=await getGen();
+    if(isObjectEmpty(books) && isObjectEmpty(genres)){
+        res.render("index",{ message1:"No books added", message2:"No genres added" });
+        
+    }
+    else if(isObjectEmpty(books)){
+        res.render("index",{ message1:"No books added" ,genres:genres });
+        
+    }else if(isObjectEmpty(genres)){
+        res.render("index",{books:books, message2:"No genres added" });
         
     }
     else{
         console.log(books);
-        res.render("index",{ books:books });
+        res.render("index",{ books:books,genres:genres });
     
 
     }
@@ -33,19 +50,30 @@ const getAllBooks=asyncHandler(async (req,res)=>{
 });
 
 const getStatusBooks=asyncHandler(async (req,res)=>{
-    const read_stat=req.query.stat;
+    const read_stat=req.query.status;
+  
+    console.log(req.query);
     const books=await db.StatusBooks(customer_id,read_stat);
+    const genres=await getGen();
     if(!read_stat){
-        res.status(404).render("error",{message:"Status not found"});
+        res.status(404).render("error",{message1:"Status not found"});
 
 
     }
+    else if(isObjectEmpty(books) && isObjectEmpty(genres)){
+        res.render("index",{ message1:"No books added", message2:"No genres added" });
+        
+    }
     else if(isObjectEmpty(books)){
-        res.render("index",{ message:"No book found :(" });
+        res.render("index",{ message1:"No books added" ,genres:genres });
+        
+    }else if(isObjectEmpty(genres)){
+        res.render("index",{books:books, message2:"No genres added" });
         
     }
     else{
-        res.render("index",{ books:books });
+        console.log(books);
+        res.render("index",{ books:books,genres:genres  });
     
 
     }
@@ -56,17 +84,26 @@ const getStatusBooks=asyncHandler(async (req,res)=>{
 const getBooksByGenre=asyncHandler(async (req,res)=>{
     const genre_name=req.query.genre;
     const books=await db.BooksByBooks(customer_id,genre_name);
-    if(!genre){
-        res.status(404).render("error",{message:"Genre not found"});
+    const genres=await getGen();
+    if(!genre_name){
+        res.status(404).render("error",{message1:"Genre not found"});
 
 
     }
+    else if(isObjectEmpty(books) && isObjectEmpty(genres)){
+        res.render("index",{ message1:"No books added", message2:"No genres added" });
+        
+    }
     else if(isObjectEmpty(books)){
-        res.render("index",{ message:"No books available for this genre" });
+        res.render("index",{ message1:"No books added" ,genres:genres });
+        
+    }else if(isObjectEmpty(genres)){
+        res.render("index",{books:books, message2:"No genres added" });
         
     }
     else{ 
-        res.render("index",{ books:books});
+        console.log(books);
+        res.render("index",{ books:books,genres:genres });
     
 
     }
@@ -77,17 +114,26 @@ const getBooksByGenre=asyncHandler(async (req,res)=>{
 const getSearchBook=asyncHandler(async (req,res)=>{
     const input=req.query.input;
     const books=await db.searchBooks(customer_id,input);
+    const genres=await getGen();
     if(!input){
-        res.status(404).render("error",{message:"No input error"});
+        res.status(404).render("error",{message1:"No input error"});
 
 
     }
+    else if(isObjectEmpty(books) && isObjectEmpty(genres)){
+        res.render("index",{ message1:"No books added", message2:"No genres added" });
+        
+    }
     else if(isObjectEmpty(books)){
-        res.render("index",{message:"No book found :(" });
+        res.render("index",{ message1:"No books added" ,genres:genres });
+        
+    }else if(isObjectEmpty(genres)){
+        res.render("index",{books:books, message2:"No genres added" });
         
     }
     else{ 
-        res.render("index",{ books:books});
+        console.log(books);
+        res.render("index",{ books:books,genres:genres });
     
 
     }
@@ -104,7 +150,7 @@ const postCreate=asyncHandler(async (req,res)=>{
     console.log(req.body);
  
     if(!req.body){
-        res.status(404).render("error",{message:"Something went wrong with the input"});
+        res.status(404).render("error",{message1:"Something went wrong with the input"});
 
 
     }
@@ -125,7 +171,7 @@ const postCreate=asyncHandler(async (req,res)=>{
 const getUpdate=asyncHandler(async (req,res)=>{
     const book_id=req.params.book_id;
     if(!book_id){
-        res.status(404).render("error",{message:"Something went wrong"});
+        res.status(404).render("error",{message1:"Something went wrong"});
         
 
 
@@ -146,7 +192,7 @@ const postUpdate=asyncHandler(async (req,res)=>{
     console.log(req.body);
     await db.updateBook(req.body);
     if(!req.body){
-        res.status(404).render("error",{message:"Something went wrong with the input"});
+        res.status(404).render("error",{message1:"Something went wrong with the input"});
 
 
     }
@@ -163,6 +209,7 @@ const postUpdate=asyncHandler(async (req,res)=>{
 const deletes=asyncHandler(async (req,res)=>{
     const book_id=req.query.delete;
     await db.deleteBook(customer_id,book_id);
+    res.redirect(`/${customer_id}`);
   
     
 

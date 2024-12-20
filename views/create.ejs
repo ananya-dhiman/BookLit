@@ -6,7 +6,7 @@
             <div> Create A Book</div>
          
 
-            <form action="/:customer_id/create" method="POST">
+            <form action="/<%=customer_id%>/create" method="POST">
                 <li className="Book">
                     <label>Book Name</label>
                     <input name="book_name" type="text" placeholder="Black Beauty">
@@ -26,7 +26,7 @@
                     </select>
 
                     <label>Genre</label>
-                    <input name="genre_name" placeholder="Anna Sewell">
+                    <input name="genre_name" placeholder="Slice Of Life">
                     
                     <button type="submit">Submit</button>
 
@@ -35,7 +35,7 @@
 
             </form>
             
-            <a href="/:customer_id">Back </a>
+            <a href="/<%=customer_id%>">Back </a>
 
     </body>
 

@@ -11,9 +11,10 @@ customerRouter.get("/",(req,res)=>{
 
 });
 
-customerRouter.get("/:customer_id",async(req,res)=>{
+customerRouter.get('/:customer_id',async(req,res)=>{
 
     if(req.query.status){
+        console.log("Here!!");
        return await getStatusBooks(req,res);
     }
     if(req.query.genre){
@@ -25,6 +26,7 @@ customerRouter.get("/:customer_id",async(req,res)=>{
 
     }
     if(req.query.delete){
+    
         return await deletes(req,res);
     }
     return await getAllBooks(req,res);

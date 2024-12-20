@@ -16,13 +16,13 @@ CREATE TABLE IF NOT EXISTS books(
 );
 
 CREATE TABLE IF NOT EXISTS genre(
-         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+         genre_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
          genre_name VARCHAR(100),
          book_number INTEGER
 
 );
 CREATE TABLE IF NOT EXISTS customer(
-         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+         customer_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
          customer_name VARCHAR(100),
          customer_pass VARCHAR(10)
          
