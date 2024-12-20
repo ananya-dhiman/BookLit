@@ -154,7 +154,7 @@ async function updateBook(book_id,customer_id,
     })
 {
     console.log(book_name);
-    await pool.query('UPDATE books SET book_name=$2,book_source=$3, author=$4, read_status=UPPER($5), customer_id=$6 WHERE id=$1',
+    await pool.query('UPDATE books SET book_name=$2,book_source=$3, author=$4, read_status=UPPER($5), customer_id=$6 WHERE id=$1;',
         [   
             book_id,
             book_name,

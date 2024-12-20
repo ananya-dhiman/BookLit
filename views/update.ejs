@@ -10,10 +10,10 @@
             <form action="/<%=customer_id%>/update/<%= book[0].book_id %>" method="POST">
                 <li className="Book">
                     <label>Book Name</label>
-                    <input name="name" value="<%=book[0].book_name%>" type="text" placeholder="Black Beauty">
+                    <input name="book_name" value="<%=book[0].book_name%>" type="text" placeholder="Black Beauty">
 
                     <label>Book Souce</label>
-                    <input name="link"  value="<%=book[0].book_source%>"placeholder="Enter Link">
+                    <input name="book_source"  value="<%=book[0].book_source%>"placeholder="Enter Link">
 
                     <label>Author</label>
                     <input name="author" value="<%=book[0].author%>" type="text" >
