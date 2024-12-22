@@ -1,4 +1,7 @@
 const {Client} =require("pg");
+require('dotenv').config();
+
+console.log(process.env.DATABASE_PUBLIC_URL);
 
 const SQL=`
 CREATE TABLE IF NOT EXISTS books(
@@ -32,11 +35,7 @@ CREATE TABLE IF NOT EXISTS customer(
 async function main(){
     console.log("Populate database....");
     const client=new Client({
-        host: "localhost",
-        user: "postgres",
-        database: "booklit",
-        password: "postgres",
-        port: 5432 
+        connectionString: process.env.DATABASE_PUBLIC_URL
 
     });
   await client.connect();
