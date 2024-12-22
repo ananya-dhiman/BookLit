@@ -1,11 +1,7 @@
 const {Pool}=require("pg");
 try{
     module.exports=new Pool({
-    host: "localhost",
-    user: "postgres",
-    database: "booklit",
-    password: "postgres",
-    port: 5432 
+        connectionString: process.env.DATABASE_PUBLIC_URL
     });
 }
 catch(e){
