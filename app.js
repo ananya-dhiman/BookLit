@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 const customerRouter=require("./routes/customerRouter");
 app.use(customerRouter);
 
+const homeRouter=require("./routes/homeRoute");
+app.use(homeRouter);
+
 const PORT=8080;
 app.listen(PORT,()=>{
     console.log('Express app at 8080');

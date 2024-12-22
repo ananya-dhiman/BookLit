@@ -4,13 +4,6 @@ const {Router}=require("express");
 const customerRouter=Router();
 
 
-customerRouter.get("/",(req,res)=>{
-    res.send("Hii");
-
-  
-
-});
-
 customerRouter.get('/:customer_id',async(req,res)=>{
 
     if(req.query.status){
