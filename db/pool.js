@@ -1,7 +1,7 @@
 const {Pool}=require("pg");
 try{
     module.exports=new Pool({
-        connectionString: process.env.DATABASE_URL
+        connectionString: process.env.DATABASE_PUBLIC_URL
     });
 }
 catch(e){
