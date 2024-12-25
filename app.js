@@ -26,6 +26,6 @@ const homeRouter=require("./routes/homeRoute");
 app.use(homeRouter);
 
 const PORT=8080;
-app.listen(PORT,()=>{
+app.listen(PORT,'0.0.0.0',()=>{
     console.log('Express app at 8080');
 });
