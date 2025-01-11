@@ -26,7 +26,6 @@ customerRouter.get('/:customer_id',async(req,res)=>{
 
 });
 
-customerRouter.get("/:customer_id/",(req,res)=>{ getCreate(req,res)});
 
 
 customerRouter.get("/:customer_id/create",(req,res)=>{ getCreate(req,res)});

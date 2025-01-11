@@ -57,8 +57,7 @@ async function StatusBooks(customer_id,read_stat){
 }
 
 async function BooksByGenre(customer_id,genre_name) {
-    //!Check query
-    
+
     const {rows}=await pool.query(`SELECT 
         books.id AS book_id,
         book_name,
