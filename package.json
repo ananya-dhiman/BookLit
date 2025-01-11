@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node pbj.js && node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "start": "echo 'Running pbj.js' && node pbj.js && echo 'pbj.js completed' && node app.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
