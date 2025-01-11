@@ -1,7 +1,7 @@
 const {Client} =require("pg");
 require('dotenv').config();
 
-console.log(process.env.NEON);
+console.log(process.env.DATABASE_URL);
 
 const SQL=`
 CREATE TABLE IF NOT EXISTS books(
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS customer(
 async function main(){
     console.log("Populate database....");
     const client=new Client({
-        connectionString: process.env.NEON,
+        connectionString: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false }, 
 
     });

@@ -7,11 +7,6 @@ function addDate(){
     return formattedDate;
 }
 
-async function loginUser(){
-
-
-
-}
 
 
 async function AllBooks(customer_id){
